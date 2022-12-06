@@ -9,7 +9,7 @@ import { inspect } from "util";
 import { mainLogger } from "./utils/logger/main";
 
 const client = new Client({
-  allowedMentions: { parse: [], users: [], roles: [], repliedUser: true },
+  allowedMentions: { parse: [], roles: [], repliedUser: true },
   intents: [
     IntentsBitField.Flags.GuildMessages,
     IntentsBitField.Flags.Guilds,
@@ -48,7 +48,7 @@ const client = new Client({
     Partials.User,
   ],
   presence: { status: "online" },
-  rest: { userAgentAppendix: "Bot Name (bot repository) " },
+  rest: { userAgentAppendix: "Tickets (tickets) " },
   ws: { compress: true },
 });
 
