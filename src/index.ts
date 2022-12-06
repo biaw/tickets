@@ -1,4 +1,4 @@
-import { Client, IntentsBitField, Options, Partials } from "discord.js";
+import { ActivityType, Client, IntentsBitField, Options, Partials } from "discord.js";
 import type{ Caches } from "discord.js";
 import config from "./config";
 import { connection } from "./database";
@@ -47,7 +47,7 @@ const client = new Client({
     Partials.ThreadMember,
     Partials.User,
   ],
-  presence: { status: "online" },
+  presence: { status: "online", activities: [{ name: "Tickets", type: ActivityType.Listening }]},
   rest: { userAgentAppendix: "Tickets (tickets) " },
   ws: { compress: true },
 });
