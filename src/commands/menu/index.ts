@@ -1,6 +1,5 @@
 import type{ Awaitable, GuildMember, Message, MessageContextMenuCommandInteraction, UserContextMenuCommandInteraction } from "discord.js";
-import messageTicket from "./messageTicket";
-import userTicket from "./userTicket";
+import { readdir } from "fs/promises";
 
 interface BaseMenuCommand {
   name: string;
@@ -19,4 +18,13 @@ export interface MessageMenuCommand extends BaseMenuCommand {
 
 export type MenuCommand = MessageMenuCommand | UserMenuCommand;
 
-export const allMenuCommands: MenuCommand[] = [userTicket, messageTicket];
+export const allMenuCommands: MenuCommand[] = [];
+
+void readdir(__dirname).then(async files => {
+  for (const file of files) {
+    if (file.endsWith(".js") && file !== "index.js") {
+      const { default: command } = await import(`./${file}`) as { default: MenuCommand };
+      allMenuCommands.push(command);
+    }
+  }
+});
