@@ -1,7 +1,7 @@
 import type{ MessageMenuCommand } from ".";
 
 export default {
-  name: "Create Ticket",
+  name: "Create-Ticket",
   type: "message",
   execute(interaction) {
     return void interaction.reply("Hello world!");
