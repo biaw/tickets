@@ -48,7 +48,7 @@ const client = new Client({
     Partials.User,
   ],
   presence: { status: "online", activities: [{ name: "Tickets", type: ActivityType.Listening }]},
-  rest: { userAgentAppendix: "Tickets (tickets) " },
+  rest: { userAgentAppendix: "Tickets (biaw/tickets) " },
   ws: { compress: true },
 });
 
