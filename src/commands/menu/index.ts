@@ -1,4 +1,6 @@
 import type{ Awaitable, GuildMember, Message, MessageContextMenuCommandInteraction, UserContextMenuCommandInteraction } from "discord.js";
+import messageTicket from "./messageTicket";
+import userTicket from "./userTicket";
 
 interface BaseMenuCommand {
   name: string;
@@ -17,4 +19,4 @@ export interface MessageMenuCommand extends BaseMenuCommand {
 
 export type MenuCommand = MessageMenuCommand | UserMenuCommand;
 
-export const allMenuCommands: MenuCommand[] = [];
+export const allMenuCommands: MenuCommand[] = [userTicket, messageTicket];
