@@ -1,18 +1,7 @@
 {
-  "name": "discord-bot-boilerplate",
+  "name": "tickets",
   "license": "MIT",
-  "author": "Glenn <glenn@not-tech.support> (https://not-tech.support)",
-  "funding": [
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/promise"
-    },
-    {
-      "type": "patreon",
-      "url": "https://patreon.com/promises"
-    },
-    "http://paypal.me/nottechsupport"
-  ],
+  "author": "Ta1al",
   "main": "build",
   "scripts": {
     "build": "tsc",
