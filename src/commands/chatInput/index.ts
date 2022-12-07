@@ -1,5 +1,6 @@
 import type{ ApplicationCommandAutocompleteNumericOptionData, ApplicationCommandAutocompleteStringOptionData, ApplicationCommandBooleanOptionData, ApplicationCommandChannelOptionData, ApplicationCommandMentionableOptionData, ApplicationCommandNonOptionsData, ApplicationCommandNumericOptionData, ApplicationCommandRoleOptionData, ApplicationCommandStringOptionData, ApplicationCommandUserOptionData, Awaitable, ChatInputCommandInteraction } from "discord.js";
 import type{ Autocomplete } from "../../handlers/interactions/autocompletes";
+import channels from "./channels";
 import ping from "./ping";
 
 export interface ChatInputCommand {
@@ -31,4 +32,4 @@ export type ChatInputCommandOptionDataNoAutocomplete =
 
 export type ChatInputCommandOptionData = ChatInputCommandOptionDataAutocomplete | ChatInputCommandOptionDataNoAutocomplete;
 
-export const allChatInputCommands: ChatInput[] = [ping];
+export const allChatInputCommands: ChatInput[] = [ping, channels];
