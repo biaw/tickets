@@ -1,6 +1,6 @@
 import type{ ApplicationCommandAutocompleteNumericOptionData, ApplicationCommandAutocompleteStringOptionData, ApplicationCommandBooleanOptionData, ApplicationCommandChannelOptionData, ApplicationCommandMentionableOptionData, ApplicationCommandNonOptionsData, ApplicationCommandNumericOptionData, ApplicationCommandRoleOptionData, ApplicationCommandStringOptionData, ApplicationCommandUserOptionData, Awaitable, ChatInputCommandInteraction } from "discord.js";
 import type{ Autocomplete } from "../../handlers/interactions/autocompletes";
-import { readdir } from "fs/promises";
+import ping from "./ping";
 
 export interface ChatInputCommand {
   name: string;
@@ -31,13 +31,4 @@ export type ChatInputCommandOptionDataNoAutocomplete =
 
 export type ChatInputCommandOptionData = ChatInputCommandOptionDataAutocomplete | ChatInputCommandOptionDataNoAutocomplete;
 
-export const allChatInputCommands: ChatInput[] = [];
-
-void readdir(__dirname).then(async files => {
-  for (const file of files) {
-    if (file.endsWith(".js") && file !== "index.js") {
-      const { default: command } = await import(`./${file}`) as { default: ChatInput };
-      allChatInputCommands.push(command);
-    }
-  }
-});
+export const allChatInputCommands: ChatInput[] = [ping];
