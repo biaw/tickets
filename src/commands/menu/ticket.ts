@@ -98,6 +98,7 @@ async function createThread(
     name: target.displayName,
     autoArchiveDuration: ThreadAutoArchiveDuration.OneDay,
     type: ChannelType.PrivateThread,
+    invitable: false,
     reason: `Ticket created by ${creatorName}`,
   });
   await ticket.members.add(target, `Ticket created by ${creatorName}`);
