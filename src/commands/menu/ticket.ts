@@ -1,4 +1,4 @@
-import type{ ContextMenuCommandInteraction, GuildMember, Message, TextChannel, ThreadChannel } from "discord.js";
+import type{ ContextMenuCommandInteraction, GuildMember, Message, StringSelectMenuInteraction, TextChannel, ThreadChannel } from "discord.js";
 import {
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
@@ -18,22 +18,39 @@ export default async function handleTicket(
   if (!doc) return void interaction.editReply("⚠ There are no channels in the ticket system");
   if (doc.channels.length > 1) return multiChannel(interaction, doc, target, message);
 
-  const channel = interaction.guild!.channels.cache.get(doc.channels[0]!) as TextChannel | undefined;
+  const channel = interaction.guild!.channels.cache.get(doc.channels[0]!) as TextChannel;
+
+  const canContinue = checkPermissions(interaction, channel, doc.channels[0]!);
+  if (!canContinue) return;
+
+  const ticket = await createThread(channel, interaction.user.tag, target);
+  return void interaction.editReply(`✅ Created ticket <#${ticket.id}>`);
+
+}
+
+function checkPermissions(
+  interaction: ContextMenuCommandInteraction | StringSelectMenuInteraction<"cached">,
+  channel: TextChannel | undefined, id: string,
+): boolean {
   if (!channel) {
-    return void interaction.editReply(
-      `⚠ The channel with ID ${doc.channels[0]!} is no longer available`,
-    );
+    respond(`⚠ The channel with ID ${id} is no longer available`);
+    return false;
   }
   if (!hasPermissionToCreateThread(channel, interaction.guild!.members.me!)) {
-    return void interaction.editReply([
+    respond([
       "⚠ I'm missing one of the following permissions in that channel:",
       "• Create Public Threads",
       "• Create Private Threads",
       "• Send Messages in Threads",
     ].join("\n"));
+    return false;
   }
-  const ticket = await createThread(channel, interaction.user.tag, target);
-  return void interaction.editReply(`✅ Created ticket <#${ticket.id}>`);
+  return true;
+
+  function respond(msg: string) {
+    if (interaction.isContextMenuCommand()) void interaction.editReply(msg);
+    else void interaction.update({ content: msg, components: []});
+  }
 }
 
 function multiChannel(
@@ -57,13 +74,9 @@ function multiChannel(
       selectType: "string",
       async callback(selectInteraction) {
         const { values } = selectInteraction;
-        const channel = interaction.guild!.channels.cache.get(values[0]!) as TextChannel | undefined;
-        if (!channel) {
-          return void selectInteraction.update({
-            content: `⚠ The channel with ID ${values[0]!} is no longer available`,
-            components: [],
-          });
-        }
+        const channel = interaction.guild!.channels.cache.get(values[0]!) as TextChannel;
+        const canContinue = checkPermissions(selectInteraction, channel, values[0]!);
+        if (!canContinue) return;
 
         const ticket = await createThread(channel, interaction.user.tag, target, message);
         return void selectInteraction.update({
