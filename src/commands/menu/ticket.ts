@@ -5,6 +5,7 @@ import {
   ThreadAutoArchiveDuration,
 } from "discord.js";
 import ChannelModel from "../../database/channels";
+import { ChannelType } from "discord.js";
 import { hasPermissionToCreateThread } from "../chatInput/channels/add";
 import { selectMenuComponents } from "../../handlers/interactions/components";
 
@@ -96,6 +97,7 @@ async function createThread(
   const ticket = await channel.threads.create({
     name: target.displayName,
     autoArchiveDuration: ThreadAutoArchiveDuration.OneDay,
+    type: ChannelType.PrivateThread,
     reason: `Ticket created by ${creatorName}`,
   });
   await ticket.members.add(target, `Ticket created by ${creatorName}`);
