@@ -5,6 +5,7 @@ import {
   ThreadAutoArchiveDuration,
 } from "discord.js";
 import ChannelModel from "../../database/channels";
+import { hasPermissionToCreateThread } from "../chatInput/channels/add";
 import { selectMenuComponents } from "../../handlers/interactions/components";
 
 export default async function handleTicket(
@@ -22,6 +23,14 @@ export default async function handleTicket(
     return void interaction.editReply(
       `⚠ The channel with ID ${doc.channels[0]!} is no longer available`,
     );
+  }
+  if (!hasPermissionToCreateThread(channel, interaction.guild!.members.me!)) {
+    return void interaction.editReply([
+      "⚠ I'm missing one of the following permissions in that channel:",
+      "• Create Public Threads",
+      "• Create Private Threads",
+      "• Send Messages in Threads",
+    ].join("\n"));
   }
   const ticket = await createThread(channel, interaction.user.tag, target);
   return void interaction.editReply(`✅ Created ticket <#${ticket.id}>`);
@@ -48,9 +57,7 @@ function multiChannel(
       selectType: "string",
       async callback(selectInteraction) {
         const { values } = selectInteraction;
-        const channel = interaction.guild!.channels.cache.get(values[0]!) as
-            | TextChannel
-            | undefined;
+        const channel = interaction.guild!.channels.cache.get(values[0]!) as TextChannel | undefined;
         if (!channel) {
           return void selectInteraction.update({
             content: `⚠ The channel with ID ${values[0]!} is no longer available`,
