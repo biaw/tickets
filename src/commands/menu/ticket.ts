@@ -86,7 +86,7 @@ async function createThread(
     reason: `Ticket created by ${creatorName}`,
   });
   await ticket.members.add(target, `Ticket created by ${creatorName}`);
-  if (message) await sendTicketMessage(ticket, creatorName, target, message);
+  await sendTicketMessage(ticket, creatorName, target, message);
   return ticket;
 }
 
