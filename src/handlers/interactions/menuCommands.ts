@@ -2,7 +2,7 @@ import type{ ContextMenuCommandInteraction } from "discord.js";
 import { allMenuCommands } from "../../commands/menu";
 
 export default async function menuCommandHandler(interaction: ContextMenuCommandInteraction<"cached">): Promise<void> {
-  const command = allMenuCommands.find(({ name }) => name === interaction.commandName);
+  const command = allMenuCommands.find(({ name, type }) => name === interaction.commandName && (interaction.isUserContextMenuCommand() ? type === "user" : type === "message"));
   if (interaction.isMessageContextMenuCommand() && command?.type === "message") {
     const target = await interaction.channel?.messages.fetch(interaction.targetId).catch(() => null);
     if (target) return command.execute(interaction, target);
