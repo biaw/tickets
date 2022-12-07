@@ -78,7 +78,7 @@ async function createThread(
   channel: TextChannel,
   creatorName: string,
   target: GuildMember,
-  message?: Message<true> | null,
+  message?: Message<true>,
 ) {
   const ticket = await channel.threads.create({
     name: target.displayName,
