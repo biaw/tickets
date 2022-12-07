@@ -1,4 +1,5 @@
 import { ApplicationCommandOptionType, PermissionFlagsBits } from "discord.js";
+import type{ GuildMember, TextChannel } from "discord.js";
 import ChannelModel from "../../../database/channels";
 import type{ ChatInputSubcommand } from "..";
 
@@ -14,19 +15,18 @@ export default {
     },
   ],
   async execute(interaction) {
-    const channel = interaction.options.getChannel("channel", true);
+    const channel = interaction.options.getChannel("channel", true) as TextChannel;
     const doc = await ChannelModel.findOne({ guildId: interaction.guildId });
     if (!channel.isTextBased() || channel.isDMBased() || channel.isThread()) {
       return void interaction.reply("❌ You can only add text channels to the ticket system");
     }
-    if (
-      !channel
-        .permissionsFor(interaction.guild.members.me!, true)
-        .has([PermissionFlagsBits.CreatePublicThreads, PermissionFlagsBits.CreatePrivateThreads])
-    ) {
-      return void interaction.reply(
-        "⚠ I need permissions to create public and private threads in that channel",
-      );
+    if (!hasPermissionToCreateThread(channel, interaction.guild.members.me!)) {
+      return void interaction.reply([
+        "⚠ I'm missing one of the following permissions in that channel:",
+        "• Create Public Threads",
+        "• Create Private Threads",
+        "• Send Messages in Threads",
+      ].join("\n"));
     }
     await interaction.deferReply();
     if (!doc) {
@@ -45,3 +45,13 @@ export default {
     return void interaction.editReply(`✅ Added <#${channel.id}> to the ticket system`);
   },
 } as ChatInputSubcommand;
+
+export function hasPermissionToCreateThread(channel: TextChannel, member: GuildMember): boolean {
+  return channel
+    .permissionsFor(member, true)
+    .has([
+      PermissionFlagsBits.CreatePublicThreads,
+      PermissionFlagsBits.CreatePrivateThreads,
+      PermissionFlagsBits.SendMessagesInThreads,
+    ]);
+}
