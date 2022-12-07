@@ -23,7 +23,7 @@ const client = new Client({
     GuildEmojiManager: 0,
     GuildForumThreadManager: 0,
     GuildInviteManager: 0,
-    GuildMemberManager: 0,
+    GuildMemberManager: 1,
     GuildScheduledEventManager: 0,
     GuildStickerManager: 0,
     GuildStickerPackManager: 0,
