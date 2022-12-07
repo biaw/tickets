@@ -1,11 +1,11 @@
 import type{ UserMenuCommand } from ".";
-
+import handleTicket from "./ticket";
 
 export default {
   name: "Create Ticket",
   type: "user",
-  execute(interaction) {
-    return void interaction.reply("Hello world!");
+  async execute(interaction, target) {
+    await handleTicket(interaction, target);
   },
 
 } as UserMenuCommand;
