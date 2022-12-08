@@ -1,4 +1,5 @@
 import type{ AnySelectMenuInteraction, Awaitable, ButtonInteraction, ChannelSelectMenuInteraction, MentionableSelectMenuInteraction, RoleSelectMenuInteraction, Snowflake, StringSelectMenuInteraction, UserSelectMenuInteraction } from "discord.js";
+import { allButtonComponents, allSelectMenuComponents } from "../../commands/components";
 import { ComponentType } from "discord.js";
 
 interface BaseComponent {
@@ -39,7 +40,13 @@ interface UserSelectMenuComponent extends BaseComponent {
 export type AnySelectMenuComponent = ChannelSelectMenuComponent | MentionableSelectMenuComponent | RoleSelectMenuComponent | StringSelectMenuComponent | UserSelectMenuComponent;
 
 export const buttonComponents = new Map<string, ButtonComponent>();
+allButtonComponents.forEach(component => {
+  buttonComponents.set(component.customId!, component);
+});
 export const selectMenuComponents = new Map<string, AnySelectMenuComponent>();
+allSelectMenuComponents.forEach(component => {
+  selectMenuComponents.set(component.customId!, component);
+});
 
 export default function componentHandler(interaction: AnySelectMenuInteraction<"cached"> | ButtonInteraction<"cached">): void {
   if (interaction.isButton()) {
