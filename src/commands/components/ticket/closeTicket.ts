@@ -4,14 +4,14 @@ import type{ ButtonComponent } from "../../../handlers/interactions/components";
 import { buttonComponents } from "../../../handlers/interactions/components";
 
 export default {
-  customId: "closeThread",
+  customId: "closeTicket",
   allowedUsers: "all",
   persistent: true,
   callback(interaction) {
     const thread = interaction.channel as ThreadChannel | undefined;
     if (!thread?.isThread() || !thread.viewable || thread.archived) return;
     if (!thread.manageable) {
-      return void interaction.reply("⚠ I do not have permission to close this thread.");
+      return void interaction.reply("⚠ I do not have permission to close this ticket.");
     }
 
     const yesButton = new ButtonBuilder()
@@ -24,28 +24,28 @@ export default {
       .setStyle(ButtonStyle.Secondary);
 
     return void interaction.reply({
-      content: "⚠ Are you sure you want to close this thread?\n(Only moderators can reopen threads)",
+      content: "⚠ Are you sure you want to close this ticket?\n(Only moderators can reopen tickets)",
       components: [{ type: 1, components: [yesButton, noButton]}],
       ephemeral: true,
     }).then(() => {
       buttonComponents.set(`${interaction.id}-yes`, {
         allowedUsers: [interaction.user.id],
         callback: yesInteraction => {
-          void yesInteraction.update({ content: "⌛ Closing thread...", components: []})
-            .then(() => closeThread(yesInteraction, thread));
+          void yesInteraction.update({ content: "⌛ Closing ticket...", components: []})
+            .then(() => closeTicket(yesInteraction, thread));
         },
       });
 
       buttonComponents.set(`${interaction.id}-no`, {
         allowedUsers: [interaction.user.id],
         callback: noInteraction => void noInteraction
-          .update({ content: "⚠ Closing thread cancelled.", components: []}),
+          .update({ content: "⚠ Closing ticket cancelled.", components: []}),
       });
     });
   },
 } as ButtonComponent;
 
-async function closeThread(interaction: ButtonInteraction, thread: ThreadChannel): Promise<void> {
+async function closeTicket(interaction: ButtonInteraction, thread: ThreadChannel): Promise<void> {
   await thread.setArchived(true, `Archived by ${interaction.user.tag}.`)
-    .catch(() => interaction.followUp("⚠ An error occurred while closing this thread."));
+    .catch(() => interaction.followUp("⚠ An error occurred while closing this ticket."));
 }

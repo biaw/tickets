@@ -108,22 +108,22 @@ async function createThread(
 }
 
 async function sendTicketMessage(ticket: ThreadChannel, creator: string, target: GuildMember, message?: Message<true>) {
-  const addServer = new ButtonBuilder()
+  const addServerButton = new ButtonBuilder()
     .setCustomId("addServer")
     .setLabel("Add Server")
     .setStyle(ButtonStyle.Primary);
-    // callback is defined in src/commands/components/thread/addServer.ts
-  const closeThreadButton = new ButtonBuilder()
-    .setCustomId("closeThread")
-    .setLabel("Close Thread")
+    // callback is defined in src/commands/components/ticket/addServer.ts
+  const closeTicketButton = new ButtonBuilder()
+    .setCustomId("closeTicket")
+    .setLabel("Close Ticket")
     .setStyle(ButtonStyle.Danger);
-    // callback is defined in src/commands/components/thread/closeThread.ts
+    // callback is defined in src/commands/components/ticket/closeTicket.ts
   await ticket.send({
     content: [
       `**Ticket created by ${creator} for ${target.toString()}**`,
       message ? `*Context:*\n> ${message.content}` : "",
     ].join("\n"),
-    components: [{ type: 1, components: [addServer, closeThreadButton]}],
+    components: [{ type: 1, components: [addServerButton, closeTicketButton]}],
   });
 }
 
