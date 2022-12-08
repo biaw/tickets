@@ -124,7 +124,7 @@ async function sendTicketMessage(ticket: ThreadChannel, creator: string, target:
       message ? `*Context:*\n> ${message.content}` : "",
     ].join("\n"),
     components: [{ type: 1, components: [addServerButton, closeTicketButton]}],
-  });
+  }).then(msg => msg.pin());
 }
 
 interface TicketDocument {
