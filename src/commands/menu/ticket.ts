@@ -1,3 +1,4 @@
+import { ButtonBuilder, ButtonStyle } from "discord.js";
 import type{ ContextMenuCommandInteraction, GuildMember, Message, StringSelectMenuInteraction, TextChannel, ThreadChannel } from "discord.js";
 import {
   StringSelectMenuBuilder,
@@ -107,11 +108,22 @@ async function createThread(
 }
 
 async function sendTicketMessage(ticket: ThreadChannel, creator: string, target: GuildMember, message?: Message<true>) {
+  const addServer = new ButtonBuilder()
+    .setCustomId("addServer")
+    .setLabel("Add Server")
+    .setStyle(ButtonStyle.Primary);
+    // callback is defined in src/commands/components/thread/addServer.ts
+  const closeThreadButton = new ButtonBuilder()
+    .setCustomId("closeThread")
+    .setLabel("Close Thread")
+    .setStyle(ButtonStyle.Danger);
+    // callback is defined in src/commands/components/thread/closeThread.ts
   await ticket.send({
     content: [
       `**Ticket created by ${creator} for ${target.toString()}**`,
       message ? `*Context:*\n> ${message.content}` : "",
     ].join("\n"),
+    components: [{ type: 1, components: [addServer, closeThreadButton]}],
   });
 }
 
