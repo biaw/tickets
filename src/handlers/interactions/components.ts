@@ -7,7 +7,7 @@ interface BaseComponent {
   persistent?: true;
 }
 
-interface ButtonComponent extends BaseComponent {
+export interface ButtonComponent extends BaseComponent {
   callback(interaction: ButtonInteraction<"cached">): Awaitable<void>;
 }
 
