@@ -13,13 +13,13 @@ $ npm install
 ```
 
 ##### 3. Rename `example.env` to `.env` and fill in the values
-| Variable       | Description                       |
-| -------------- | --------------------------------- |
-| `CLIENT_ID`    | Bot User ID                       |
-| `CLIENT_TOKEN` | Bot Token                         |
-| `DATABASE_URI` | MongoDB URI                       |
-| `OWNER_ID`     | Bot Owner ID                      |
-| `GUILD_ID`     | Server ID to register commands to |
+| Variable       | Description                       | Required |
+| -------------- | --------------------------------- | -------- |
+| `CLIENT_ID`    | Bot User ID                       | Yes      |
+| `CLIENT_TOKEN` | Bot Token                         | Yes      |
+| `DATABASE_URI` | MongoDB URI                       | Yes      |
+| `OWNER_ID`     | Bot Owner ID                      | Yes      |
+| `GUILD_ID`     | Server ID to register commands to | No       |
 
 All values are required.
 
