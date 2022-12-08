@@ -36,6 +36,8 @@ interface UserSelectMenuComponent extends BaseComponent {
   callback(interaction: UserSelectMenuInteraction<"cached">): Awaitable<void>;
 }
 
+export type AnySelectMenuComponent = ChannelSelectMenuComponent | MentionableSelectMenuComponent | RoleSelectMenuComponent | StringSelectMenuComponent | UserSelectMenuComponent;
+
 export const buttonComponents = new Map<string, ButtonComponent>();
 export const selectMenuComponents = new Map<string, ChannelSelectMenuComponent | MentionableSelectMenuComponent | RoleSelectMenuComponent | StringSelectMenuComponent | UserSelectMenuComponent>();
 
