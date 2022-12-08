@@ -2,6 +2,7 @@ import type{ AnySelectMenuInteraction, Awaitable, ButtonInteraction, ChannelSele
 import { ComponentType } from "discord.js";
 
 interface BaseComponent {
+  customId?: string;
   allowedUsers: "all" | [Snowflake, ...Snowflake[]];
   persistent?: true;
 }
