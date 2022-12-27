@@ -1,0 +1,17 @@
+_extends: .github
+
+repository:
+  name: tickets
+  description: "Ticket Bot for Promise Solutions"
+  private: false
+
+branches:
+  - name: main
+    protection:
+      required_status_checks:
+        checks:
+          - context: CodeQL Analysis
+          - context: ESLint
+          - context: OSSAR Analysis
+          - context: NJS Scan
+          - context: Test Build
