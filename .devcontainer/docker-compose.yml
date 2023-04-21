@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   code:
-    image: mcr.microsoft.com/devcontainers/javascript-node:0-18-bullseye@sha256:8d96097757566369dbb5430c67acb843402f5785ed458136208366a5d3d63c80
+    image: mcr.microsoft.com/devcontainers/javascript-node:0-18-bullseye@sha256:af9c7445c24f43f7ddc1f8b5dd3d4af67235c8c40f11f66df6330b787806c2c3
     volumes:
       - ../..:/workspaces:cached
     command: sleep infinity
