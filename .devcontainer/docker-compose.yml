@@ -8,7 +8,7 @@ services:
     command: sleep infinity
     network_mode: service:db
   db:
-    image: mongo:4@sha256:5e97d22fb95e976d54f1913997dea61a14da6c865d2d5b8c4ad942404cd5dd68
+    image: mongo:4@sha256:c5ba5c36cc22decc515040be69afd81ca40c13e769c2f864fd7c60b4e400dbc7
     restart: unless-stopped
     volumes:
       - ../database:/data/db
