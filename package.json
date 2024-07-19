@@ -21,7 +21,7 @@
   "dependencies": {
     "@sapphire/type": "2.4.4",
     "@typegoose/typegoose": "11.3.0",
-    "dedent": "0.7.0",
+    "dedent": "1.5.3",
     "discord.js": "14.15.3",
     "dotenv": "16.1.4",
     "mongoose": "7.3.4",
