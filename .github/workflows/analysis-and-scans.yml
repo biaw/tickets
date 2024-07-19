@@ -19,13 +19,13 @@ jobs:
       uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
 
     - name: Initialize
-      uses: github/codeql-action/init@e113c555ef0956479345cfc3ed530c938d670db0 # v2
+      uses: github/codeql-action/init@2d790406f505036ef40ecba973cc774a50395aac # v3
 
     - name: Autobuild
-      uses: github/codeql-action/autobuild@e113c555ef0956479345cfc3ed530c938d670db0 # v2
+      uses: github/codeql-action/autobuild@2d790406f505036ef40ecba973cc774a50395aac # v3
 
     - name: Perform analysis and upload results
-      uses: github/codeql-action/analyze@e113c555ef0956479345cfc3ed530c938d670db0 # v2
+      uses: github/codeql-action/analyze@2d790406f505036ef40ecba973cc774a50395aac # v3
 
   njsscan:
     name: NJS Scan
@@ -41,7 +41,7 @@ jobs:
         args: '. --sarif --output results.sarif || true'
 
     - name: Upload results
-      uses: github/codeql-action/upload-sarif@e113c555ef0956479345cfc3ed530c938d670db0 # v2
+      uses: github/codeql-action/upload-sarif@2d790406f505036ef40ecba973cc774a50395aac # v3
       with:
         sarif_file: results.sarif
 
@@ -58,6 +58,6 @@ jobs:
       id: analysis
 
     - name: Upload results
-      uses: github/codeql-action/upload-sarif@e113c555ef0956479345cfc3ed530c938d670db0 # v2
+      uses: github/codeql-action/upload-sarif@2d790406f505036ef40ecba973cc774a50395aac # v3
       with:
         sarif_file: ${{ steps.analysis.outputs.sarifFile }}
