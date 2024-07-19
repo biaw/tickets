@@ -26,7 +26,7 @@
     "dotenv": "16.1.4",
     "mongoose": "7.3.4",
     "winston": "3.10.0",
-    "winston-daily-rotate-file": "4.7.1"
+    "winston-daily-rotate-file": "5.0.0"
   },
   "devDependencies": {
     "@tsconfig/node18-strictest": "1.0.0",
